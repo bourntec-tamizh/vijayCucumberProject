@@ -1,18 +1,9 @@
 package libraries;
-
-import com.google.zxing.*;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jboss.aerogear.security.otp.Totp;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -126,41 +117,6 @@ public class Validations {
         return count;
     }
 
-    public static int getNumberOfOccurancesInXLSXDoc(String doc, String text) throws IOException {
-        int count = 0;
-        FileInputStream file = null;
-        try {
-            file = new FileInputStream(new File(doc));
-            XSSFWorkbook book = new XSSFWorkbook(file);
-            XSSFSheet s = book.getSheetAt(0);
-
-            Iterator itr = s.iterator();
-            while (itr.hasNext()) {
-                Row rowitr = (Row) itr.next();
-                Iterator cellitr = rowitr.cellIterator();
-                while (cellitr.hasNext()) {
-                    Cell celldata = (Cell) cellitr.next();
-                    switch (celldata.getCellType()) {
-                        case STRING:
-//                            System.out.println("celldata.getStringCellValue()#" + celldata.getStringCellValue());
-                            if (celldata.getStringCellValue().toLowerCase().contains(text.toLowerCase())) {
-                                System.out.println("celldata.getStringCellValue()#" + celldata.getStringCellValue());
-                                count++;
-                            }
-                    }
-                }
-            }
-            System.out.println("Number of Occurances of '" + text + "' is " + count);
-        } catch (FileNotFoundException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-        } finally {
-            if (file != null) {
-                file.close();
-            }
-        }
-        return count;
-    }
-
     public static int compareDates(String first, String second) throws InterruptedException, ParseException {
         logger.info("comparing Dates#" + first + "#" + second);
         Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(first);
@@ -238,22 +194,5 @@ public class Validations {
             }
         }
         return null;
-    }
-
-    public static String get6DigitMFACode(String qrCode) throws IOException, NotFoundException {
-        File file = new File(System.getProperty("user.dir")+"\\QR_Codes\\"+qrCode+".png");
-        String decodedText = null;
-        BufferedImage bufferedImage = ImageIO.read(file);
-        LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
-        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-        Result result = new MultiFormatReader().decode(bitmap);
-        decodedText =  result.getText();
-        System.out.println("decodedText#"+decodedText);
-        String secret = org.apache.commons.lang.StringUtils.substringBetween(decodedText, "secret=", "&");
-        System.out.println("Secret#"+secret);
-        Totp totp = new Totp(secret);
-        String totpCode=totp.now();
-        System.out.println("TOTP Code#"+totpCode);
-        return totpCode;
     }
 }
