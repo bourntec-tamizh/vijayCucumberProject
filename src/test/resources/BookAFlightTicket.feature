@@ -1,6 +1,6 @@
 
 Feature: Book flight tickets
-  @RUN
+
   Scenario Outline: round way trip
     When I open united home page
     And I select Book menu
