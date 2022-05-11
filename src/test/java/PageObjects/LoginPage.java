@@ -22,7 +22,19 @@ public class LoginPage extends TestBase {
     }
 
     public void openBrowser() throws IOException {
-        openDriverBrowser();
+        try {
+            logger.info("Browser selected#" + browser);
+            logger.info("Operating System#" + System.getProperty("os.name"));
+            if (browser.equalsIgnoreCase("chrome")) {
+                LaunchChromeBrowser();
+            } else if (browser.equalsIgnoreCase("edge")) {
+                LaunchEdge();
+            }
+            driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
+        } catch (Exception e) {
+            logger.error("Browser failed to opened");
+        }
     }
 
 

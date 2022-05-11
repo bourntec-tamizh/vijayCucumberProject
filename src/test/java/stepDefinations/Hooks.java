@@ -1,32 +1,37 @@
-//package stepDefinations;
-//
-//import io.cucumber.java.After;
-//import io.cucumber.java.AfterStep;
-//import io.cucumber.java.Before;
-//import io.cucumber.java.Scenario;
-//import org.openqa.selenium.OutputType;
-//import org.openqa.selenium.TakesScreenshot;
-//import org.openqa.selenium.WebDriverException;
-//
-//public class Hooks extends TestBase{
-//
-//    @Before
-//    public void InitiateExtentReport(Scenario scenario) {
-//        test = reports.createTest("Scenario: "+scenario.getName());
-//    }
-//
-//    @After
-//    public void closeExtentReport(Scenario scenario){
-//        if(scenario.getStatus().toString().equalsIgnoreCase("PASSED")){
-//            test.info("Test Case completed")   ;
-//        }else{
-//            test.info("Test Case Completed")   ;
-//        }
-//        reports.flush();
-//    }
-//
-//    @AfterStep
-//    public  void screenshotAfterScenario(Scenario scenario) {
+package stepDefinations;
+
+import io.cucumber.java.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriverException;
+
+public class Hooks extends TestBase{
+
+    @BeforeStep
+    public void beforeStep(){
+        System.out.println("Cucumber Before Step");
+    }
+
+    @Before
+    public void InitiateExtentReport(Scenario scenario) {
+        System.out.println("Cucumber Before");
+        test = reports.createTest("Scenario: "+scenario.getName());
+    }
+
+    @After
+    public void closeExtentReport(Scenario scenario){
+        System.out.println("Cucumber After");
+        if(scenario.getStatus().toString().equalsIgnoreCase("PASSED")){
+            test.info("Test Case completed")   ;
+        }else{
+            test.info("Test Case Completed")   ;
+        }
+        reports.flush();
+    }
+
+    @AfterStep
+    public  void screenshotAfterScenario(Scenario scenario) {
+        System.out.println("Cucumber After Step ");
 //        if (scenario.isFailed()) {
 //            if (driver != null) {
 //                try {
@@ -39,5 +44,5 @@
 //                }
 //            }
 //        }
-//    }
-//}
+    }
+}

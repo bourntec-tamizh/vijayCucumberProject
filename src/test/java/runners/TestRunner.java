@@ -57,16 +57,12 @@ public class TestRunner extends AbstractTestNGCucumberTests {
     }
 
     private void setUpExtentReports() {
-        cal = Calendar.getInstance();
-        format = new SimpleDateFormat("dd_MMM_yyyy_hh_mm_ss");
         TestBase.reports = new ExtentReports();
-        SimpleDateFormat formatt = new SimpleDateFormat("ddMMMyyyy_HH-mm");
-        reportTime = formatt.format(cal.getTime());
-        TestBase.reportName = System.getProperty("user.dir") + "/Reports/ExtentReport.html";
+        TestBase.reportName = System.getProperty("user.dir") + "/Reports/BourntecExtentReport.html";
         TestBase.htmlReporter = new ExtentHtmlReporter(new File(TestBase.reportName));
         TestBase.htmlReporter.loadXMLConfig(String.valueOf(new File(System.getProperty("user.dir") + "/src/test/resources/extent-config.xml")));
         TestBase.reports.setSystemInfo("Browser",   TestBase.browser);
-        TestBase.reports.setSystemInfo("Author", "Mahesh");
+        TestBase.reports.setSystemInfo("Author", "Bourntec");
         TestBase.reports.setSystemInfo("Executed By", System.getProperty("user.name"));
         TestBase.reports.setSystemInfo("Operating System", System.getProperty("os.name"));
         TestBase.reports.attachReporter( TestBase.htmlReporter);
