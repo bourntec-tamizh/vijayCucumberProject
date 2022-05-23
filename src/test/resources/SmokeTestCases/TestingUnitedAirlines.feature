@@ -1,7 +1,8 @@
-@RUN
+
 @REGRESSION
 
 Feature: This feature books the flight tickets
+  @RUN
   Scenario: This test books tickets for one way journey
     When User open united home page
     And User selects Book tab

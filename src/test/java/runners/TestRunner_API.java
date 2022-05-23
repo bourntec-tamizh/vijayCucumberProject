@@ -5,8 +5,10 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import libraries.ConfigReader;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeSuite;
 import stepDefinations.TestBase;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,9 +24,9 @@ import java.util.Calendar;
 //                        ,"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter"
                 },
                 glue = {"stepDefinations"},
-                tags = "@RUN")
+                tags = "@API")
 
-public class TestRunner extends AbstractTestNGCucumberTests {
+public class TestRunner_API extends AbstractTestNGCucumberTests {
     String tags = "";
     static SimpleDateFormat format = null;
     static Calendar cal = null;
