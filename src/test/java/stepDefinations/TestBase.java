@@ -4,6 +4,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.specification.RequestSpecification;
 import libraries.ConfigReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +20,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,23 @@ public class TestBase {
     public static ExtentTest test;
     public static ExtentHtmlReporter htmlReporter;
     public static String reportName = null;
+
+    static {
+        try {
+            RestAssured.baseURI = ConfigReader.getConfigValue("URL_API");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public RequestSpecification requestSpecification(){
+        RequestSpecification requestSpecification = new RequestSpecBuilder()
+                .addHeader("Accept", "application/json")
+                .addHeader("Content-type", "application/json")
+                .build();
+        return requestSpecification;
+    }
+
 
     public static void refreshBrowser() {
         pause(1000);
